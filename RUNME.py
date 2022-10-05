@@ -35,7 +35,7 @@ from solacc.companion import NotebookSolutionCompanion
 cluster_json = {
     "num_workers": 8,
     "cluster_name": "MRA_cluster",
-    "spark_version": "9.1.x-cpu-ml-scala2.12",, # This needs to match the version of JSL in the Partner Connect
+    "spark_version": "9.1.x-cpu-ml-scala2.12", # This needs to match the version of JSL in the Partner Connect
     "spark_conf": {
         "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
         "spark.kryoserializer.buffer.max": "2000M",
