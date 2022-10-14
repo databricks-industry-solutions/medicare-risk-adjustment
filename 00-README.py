@@ -4,6 +4,8 @@
 # MAGIC 
 # MAGIC 
 # MAGIC <img src=https://hls-eng-data-public.s3.amazonaws.com/img/medicare-risk-hcc.png width=60%>
+# MAGIC 
+# MAGIC This series of notebooks is also available at www.databricks.com/solutions/accelerators/medicare-risk-adjustment and https://github.com/databricks-industry-solutions/medicare-risk-adjustment
 
 # COMMAND ----------
 

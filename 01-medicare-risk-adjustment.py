@@ -4,6 +4,8 @@
 # MAGIC In this notebook, we first use our NLP pipelines to extract disease entities and their correspodning ICD10 codes. In addition we use our models to infer demographic information such as gender at birth and age. We then use these information to calculate the Risk Adjustment Factor.
 # MAGIC 
 # MAGIC [![](https://mermaid.ink/img/pako:eNp9kcFqwzAMhl9F-NRCC9s1h0HbJIWdxrpbUoYaK6khsYOtbGxN32LPtWeaM7sQGMwXWT-f9AvpIiojSSSisdif4SUtNfjnhlMQvr_gZI3-pKBvQiAt_3JOtW9kg74NYQchpjFm8E99Y9qo7mdU9C0svoM2TO4I6_XDqCp5fweWnJlMR9gWv8ox4hMDY-M7kJ1RuyJIxwmaoSM2NMPSwuexVVb0yIo0g2PkwUV5Gxxq1TLZBM5VBagloHNkWRkd6RHyxeLRKJ1AbPOq5HJ5287UI7-taJZk8yQPVr013o1G2BdPcaLnTQ6HythpVrESHdkOlfTHvEyVpeAzdVSKxH8l1Ti0XIpSXz069BKZMqnYWJHU2DpaCRzYHD50JRK2A92gVKE_URep6w9ImbCu)](https://mermaid-js.github.io/mermaid-live-editor/edit/#pako:eNp9kcFqwzAMhl9F-NRCC9s1h0HbJIWdxrpbUoYaK6khsYOtbGxN32LPtWeaM7sQGMwXWT-f9AvpIiojSSSisdif4SUtNfjnhlMQvr_gZI3-pKBvQiAt_3JOtW9kg74NYQchpjFm8E99Y9qo7mdU9C0svoM2TO4I6_XDqCp5fweWnJlMR9gWv8ox4hMDY-M7kJ1RuyJIxwmaoSM2NMPSwuexVVb0yIo0g2PkwUV5Gxxq1TLZBM5VBagloHNkWRkd6RHyxeLRKJ1AbPOq5HJ5287UI7-taJZk8yQPVr013o1G2BdPcaLnTQ6HythpVrESHdkOlfTHvEyVpeAzdVSKxH8l1Ti0XIpSXz069BKZMqnYWJHU2DpaCRzYHD50JRK2A92gVKE_URep6w9ImbCu)
+# MAGIC 
+# MAGIC This series of notebooks is also available at www.databricks.com/solutions/accelerators/medicare-risk-adjustment and https://github.com/databricks-industry-solutions/medicare-risk-adjustment
 
 # COMMAND ----------
 
@@ -124,8 +126,8 @@ display(patient_status_df)
 # COMMAND ----------
 
 # DBTITLE 1,Write to delta
-notes_df.write.format('delta').mode('overwrite').save(f'{delta_path}/bronze/mt-oc-notes')
-patient_status_df.write.format('delta').mode('overwrite').save(f'{delta_path}/bronze/patient-status')
+notes_df.write.format('delta').mode('overwrite').option("overwriteSchema", "true").save(f'{delta_path}/bronze/mt-oc-notes')
+patient_status_df.write.format('delta').mode('overwrite').option("overwriteSchema", "true").save(f'{delta_path}/bronze/patient-status')
 display(dbutils.fs.ls(f'{delta_path}/bronze/'))
 
 # COMMAND ----------
@@ -274,7 +276,7 @@ icd10_hcc_status_df.display()
 
 # COMMAND ----------
 
-icd10_hcc_status_df.write.format('delta').mode('overwrite').save(f'{delta_path}/silver/icd10-hcc-status')
+icd10_hcc_status_df.write.format('delta').mode('overwrite').option("overwriteSchema", "true").save(f'{delta_path}/silver/icd10-hcc-status')
 
 # COMMAND ----------
 
@@ -346,7 +348,7 @@ inferred_gender_details_df.display()
 
 # COMMAND ----------
 
-inferred_gender_details_df.write.format('delta').mode('overwrite').save(f'{delta_path}/silver/inferred-gender-details')
+inferred_gender_details_df.write.format('delta').mode('overwrite').option("overwriteSchema", "true").save(f'{delta_path}/silver/inferred-gender-details')
 
 # COMMAND ----------
 
@@ -419,7 +421,7 @@ inferred_age_details.display()
 # COMMAND ----------
 
 # DBTITLE 1,write data to silver
-inferred_age_details.write.format('delta').mode('overwrite').save(f'{delta_path}/silver/inferred-age-details')
+inferred_age_details.write.format('delta').mode('overwrite').option("overwriteSchema", "true").save(f'{delta_path}/silver/inferred-age-details')
 
 # COMMAND ----------
 
@@ -550,7 +552,7 @@ patients_risk_df.display()
 
 # COMMAND ----------
 
-patients_risk_df.write.format('delta').mode('overwrite').save(f'{delta_path}/gold/patients-risk')
+patients_risk_df.write.format('delta').mode('overwrite').option("overwriteSchema", "true").save(f'{delta_path}/gold/patients-risk')
 
 # COMMAND ----------
 
