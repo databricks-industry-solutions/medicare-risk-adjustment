@@ -24,7 +24,7 @@
 # COMMAND ----------
 
 # DBTITLE 0,Install util packages
-# MAGIC %pip install git+https://github.com/databricks-academy/dbacademy-rest git+https://github.com/databricks-academy/dbacademy-gems git+https://github.com/databricks-industry-solutions/notebook-solution-companion
+# MAGIC %pip install git+https://github.com/databricks-academy/dbacademy@v1.0.13 git+https://github.com/databricks-industry-solutions/notebook-solution-companion@safe-print-html --quiet --disable-pip-version-check
 
 # COMMAND ----------
 
@@ -41,7 +41,7 @@ cluster_json = {
         "spark.kryoserializer.buffer.max": "2000M",
         "spark.databricks.delta.formatCheck.enabled": "false"
     },
-    "node_type_id": {"AWS": "i3.xlarge", "MSA": "Standard_D3_v2", "GCP": "n1-highmem-4"}, # different from standard API; this is multi-cloud friendly
+    "node_type_id": {"AWS": "i3.xlarge", "MSA": "Standard_DS3_v2", "GCP": "n1-highmem-4"}, # different from standard API; this is multi-cloud friendly
     "autotermination_minutes": 120
 }
 
