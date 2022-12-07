@@ -174,7 +174,7 @@ sbert_embedder = BertSentenceEmbeddings\
       .setOutputCol("sbert_embeddings")
  
 icd10_resolver = SentenceEntityResolverModel.pretrained("sbiobertresolve_icd10cm_augmented_billable_hcc","en", "clinical/models")\
-    .setInputCols(["ner_chunk", "sbert_embeddings"])\
+    .setInputCols(["sbert_embeddings"])\
     .setOutputCol("icd10cm_code")\
     .setDistanceFunction("EUCLIDEAN")\
     .setReturnCosineDistances(True)
@@ -310,7 +310,7 @@ sentence_embeddings = SentenceEmbeddings() \
      .setPoolingStrategy("AVERAGE")
 
 genderClassifier = ClassifierDLModel.pretrained('classifierdl_gender_biobert', 'en', 'clinical/models') \
-       .setInputCols(["document", "sentence_bert_embeddings"]) \
+       .setInputCols(["sentence_bert_embeddings"]) \
        .setOutputCol("gender")
 
 gender_pipeline = Pipeline(stages=[documentAssembler,
@@ -431,7 +431,7 @@ inferred_age_details.write.format('delta').mode('overwrite').option("overwriteSc
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## load iformation from silver tables
+# MAGIC ## load information from silver tables
 # MAGIC Now, that we have all data which we extracted from clinical notes, we can calculate Medicare Risk Adjusment Score.
 
 # COMMAND ----------
