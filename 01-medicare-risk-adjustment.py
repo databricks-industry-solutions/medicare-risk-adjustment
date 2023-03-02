@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Automated Patient Risk Adjustment and Medicare HCC Coding from Clinical Notes
-# MAGIC In this notebook, we first use our NLP pipelines to extract disease entities and their correspodning ICD10 codes. In addition we use our models to infer demographic information such as gender at birth and age. We then use these information to calculate the Risk Adjustment Factor.
+# MAGIC In this notebook, we first use our NLP pipelines to extract disease entities and their corresponding ICD10 codes. In addition we use our models to infer demographic information such as gender at birth and age. We then use these information to calculate the Risk Adjustment Factor.
 # MAGIC 
 # MAGIC [![](https://mermaid.ink/img/pako:eNp9kcFqwzAMhl9F-NRCC9s1h0HbJIWdxrpbUoYaK6khsYOtbGxN32LPtWeaM7sQGMwXWT-f9AvpIiojSSSisdif4SUtNfjnhlMQvr_gZI3-pKBvQiAt_3JOtW9kg74NYQchpjFm8E99Y9qo7mdU9C0svoM2TO4I6_XDqCp5fweWnJlMR9gWv8ox4hMDY-M7kJ1RuyJIxwmaoSM2NMPSwuexVVb0yIo0g2PkwUV5Gxxq1TLZBM5VBagloHNkWRkd6RHyxeLRKJ1AbPOq5HJ5287UI7-taJZk8yQPVr013o1G2BdPcaLnTQ6HythpVrESHdkOlfTHvEyVpeAzdVSKxH8l1Ti0XIpSXz069BKZMqnYWJHU2DpaCRzYHD50JRK2A92gVKE_URep6w9ImbCu)](https://mermaid-js.github.io/mermaid-live-editor/edit/#pako:eNp9kcFqwzAMhl9F-NRCC9s1h0HbJIWdxrpbUoYaK6khsYOtbGxN32LPtWeaM7sQGMwXWT-f9AvpIiojSSSisdif4SUtNfjnhlMQvr_gZI3-pKBvQiAt_3JOtW9kg74NYQchpjFm8E99Y9qo7mdU9C0svoM2TO4I6_XDqCp5fweWnJlMR9gWv8ox4hMDY-M7kJ1RuyJIxwmaoSM2NMPSwuexVVb0yIo0g2PkwUV5Gxxq1TLZBM5VBagloHNkWRkd6RHyxeLRKJ1AbPOq5HJ5287UI7-taJZk8yQPVr013o1G2BdPcaLnTQ6HythpVrESHdkOlfTHvEyVpeAzdVSKxH8l1Ti0XIpSXz069BKZMqnYWJHU2DpaCRzYHD50JRK2A92gVKE_URep6w9ImbCu)
 # MAGIC 
@@ -11,7 +11,7 @@
 
 # MAGIC %md
 # MAGIC ## Disease Coding and Demographic Inference
-# MAGIC We first use NLP pipelines to infer ICD10 codes as well as patinet age and gender at birth.
+# MAGIC We first use NLP pipelines to infer ICD10 codes as well as patient age and gender at birth.
 
 # COMMAND ----------
 
@@ -79,8 +79,8 @@ display(dbutils.fs.ls(f'{notes_path}/mt_oncology_10'))
 
 # MAGIC %md
 # MAGIC ### 1. Read Data and Write to Bronze Delta Layer
-# MAGIC In this dataset, each file represents a note for a patient. Perhpas in real applications we can have multiple notes for a given patient.
-# MAGIC To make our downstream processing easier, we assign a unique id to each note and also a patinet id. 
+# MAGIC In this dataset, each file represents a note for a patient. Perhaps in real applications we can have multiple notes for a given patient.
+# MAGIC To make our downstream processing easier, we assign a unique id to each note and also a patient id. 
 # MAGIC We load notes as a deltatable and combine with other information available and then write the resulting table into the bronze layer.
 
 # COMMAND ----------
@@ -99,8 +99,8 @@ display(notes_df.limit(5))
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In addition, in real life applications, there are administrative information regarding a patinet's status that can not be found in a note. 
-# MAGIC Bellow We manually creat a mock datasets and later combine extratced IC10 codes for each patient with this dataset.
+# MAGIC In addition, in real life applications, there are administrative information regarding a patient's status that can not be found in a note. 
+# MAGIC Bellow We manually create a mock datasets and later combine extracted IC10 codes for each patient with this dataset.
 
 # COMMAND ----------
 
@@ -237,7 +237,7 @@ displayHTML(icd_vis)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ICD resolver can also tell us HCC status. HCC status is 1 if the Medicare Risk Adjusment model contains ICD code.
+# MAGIC ICD resolver can also tell us HCC status. HCC status is 1 if the Medicare Risk Adjustment model contains ICD code.
 
 # COMMAND ----------
 
@@ -406,7 +406,7 @@ age_result = age_model.transform(notes_df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC As you see on the sample text, there can be multiple age entities in a given text, and not all of those entities may refer to the patient's age. Our age detection model, extracts age and assignes a confidcne level to ahc inferred entity. We store all the inferred information in a delta table that will be used later to seelct the most likely age entity as the age of the patient.
+# MAGIC As you see on the sample text, there can be multiple age entities in a given text, and not all of those entities may refer to the patient's age. Our age detection model, extracts age and assigns a confidence level to ahc inferred entity. We store all the inferred information in a delta table that will be used later to select the most likely age entity as the age of the patient.
 
 # COMMAND ----------
 
@@ -426,13 +426,13 @@ inferred_age_details.write.format('delta').mode('overwrite').option("overwriteSc
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC # Calculating Medicare Risk Adjusment Score
+# MAGIC # Calculating Medicare Risk Adjustment Score
 
 # COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## load information from silver tables
-# MAGIC Now, that we have all data which we extracted from clinical notes, we can calculate Medicare Risk Adjusment Score.
+# MAGIC Now, that we have all data which we extracted from clinical notes, we can calculate Medicare Risk Adjustment Score.
 
 # COMMAND ----------
 
@@ -495,7 +495,7 @@ gender_df.display()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we can combine all the information we have about the patinets to calculate the RAF score.
+# MAGIC Now we can combine all the information we have about the patients to calculate the RAF score.
 
 # COMMAND ----------
 

@@ -80,7 +80,7 @@
 
 # MAGIC %md
 # MAGIC ### Solution Outline
-# MAGIC In this solution accelerator, we use John Snow Labls pre-trained NLP modles for healthcare to extract ICD10 codes and associated HCC, gender at birth and age from clincial notes. We then laculate RAF score based on extracted entities from these notes, using JSL for healthcare pre-defined functions.
+# MAGIC In this solution accelerator, we use John Snow Labs' pre-trained NLP models for healthcare to extract ICD10 codes and associated HCC, gender at birth and age from clinical notes. We then calculate RAF score based on extracted entities from these notes, using JSL for healthcare pre-defined functions.
 # MAGIC 
 # MAGIC [![](https://mermaid.ink/img/pako:eNp9kcFqwzAMhl9F-NRCC9s1h0HbJIWdxrpbUoYaK6khsYOtbGxN32LPtWeaM7sQGMwXWT-f9AvpIiojSSSisdif4SUtNfjnhlMQvr_gZI3-pKBvQiAt_3JOtW9kg74NYQchpjFm8E99Y9qo7mdU9C0svoM2TO4I6_XDqCp5fweWnJlMR9gWv8ox4hMDY-M7kJ1RuyJIxwmaoSM2NMPSwuexVVb0yIo0g2PkwUV5Gxxq1TLZBM5VBagloHNkWRkd6RHyxeLRKJ1AbPOq5HJ5287UI7-taJZk8yQPVr013o1G2BdPcaLnTQ6HythpVrESHdkOlfTHvEyVpeAzdVSKxH8l1Ti0XIpSXz069BKZMqnYWJHU2DpaCRzYHD50JRK2A92gVKE_URep6w9ImbCu)](https://mermaid-js.github.io/mermaid-live-editor/edit/#pako:eNp9kcFqwzAMhl9F-NRCC9s1h0HbJIWdxrpbUoYaK6khsYOtbGxN32LPtWeaM7sQGMwXWT-f9AvpIiojSSSisdif4SUtNfjnhlMQvr_gZI3-pKBvQiAt_3JOtW9kg74NYQchpjFm8E99Y9qo7mdU9C0svoM2TO4I6_XDqCp5fweWnJlMR9gWv8ox4hMDY-M7kJ1RuyJIxwmaoSM2NMPSwuexVVb0yIo0g2PkwUV5Gxxq1TLZBM5VBagloHNkWRkd6RHyxeLRKJ1AbPOq5HJ5287UI7-taJZk8yQPVr013o1G2BdPcaLnTQ6HythpVrESHdkOlfTHvEyVpeAzdVSKxH8l1Ti0XIpSXz069BKZMqnYWJHU2DpaCRzYHD50JRK2A92gVKE_URep6w9ImbCu)
 
