@@ -105,6 +105,14 @@ display(notes_df.limit(5))
 # COMMAND ----------
 
 # DBTITLE 1,create a mock patient status dataset
+from pyspark.sql.types import StructType,StructField, IntegerType, BooleanType, StringType
+schema = StructType([       
+    StructField('patient_id', IntegerType(), True),
+    StructField('eligibility', StringType(), True),
+    StructField('orec', StringType(), True),
+    StructField('medicaid', BooleanType(), True)
+])
+
 patient_ids=[m.patient_id for m in notes_df.select('patient_id').collect()]
 eligibility_codes=["CFA", "CND", "CPA"]
 orec_codes=["0","1","2","3"]
@@ -115,12 +123,17 @@ def random_selection(choices_arr,sz):
   return(list(np.random.choice(choices_arr,sz)))
 
 df_len=len(patient_ids)
-patient_status_df = spark.createDataFrame(pd.DataFrame(
-  {"patient_id" : patient_ids,
-  "eligibility" : random_selection(eligibility_codes,df_len),
-  "orec" : random_selection(orec_codes,df_len),
-  "medicaid":random_selection([True, False],df_len),
-}))
+eligibility = random_selection(eligibility_codes,df_len)
+orec = random_selection(orec_codes,df_len)
+medicaid = random_selection([True, False],df_len)
+
+mock_data = [(patient_ids[i],
+  str(eligibility[i]),
+  str(orec[i]),
+  bool(medicaid[i]),
+) for i in range(df_len)]
+
+patient_status_df = spark.createDataFrame(mock_data, schema)
 display(patient_status_df)
 
 # COMMAND ----------
